@@ -16,17 +16,17 @@ public class Mech : MonoBehaviour
     
     private Vector3 moveDirection;
     private Vector3 velocity; // we can also store our upDown movement into moveDirection, but it's better to have separated vars for both
-
+    [Space(10)]
     [SerializeField] private bool isGrounded;
     [SerializeField] private float groundCheckDist;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float gravity;
     [SerializeField] private float jumpHeight;
-
+    [Space(10)]
     [SerializeField] private bool isStuck;
     [SerializeField] private float stuckCheckDist;
     [SerializeField] private Transform head;
-
+    [Space(10)]
     [SerializeField] private float maxFuel = 4f;
     [SerializeField] private float curFuel;
     [SerializeField] private float thrustForce = 0.5f;
@@ -34,6 +34,8 @@ public class Mech : MonoBehaviour
     // [SerializeField] private Transform groundedTransform;
     [SerializeField] private ParticleSystem effect01;
     [SerializeField] private ParticleSystem effect02;
+    [Space(10)]
+    [SerializeField] private AudioSource mechSteps;
 
     // [SerializeField] private float doubleTapTime = 1f;
     // [SerializeField] private float elapsedTime;
@@ -47,8 +49,8 @@ public class Mech : MonoBehaviour
     {
         effect01.Stop();
         effect02.Stop();
-        // Cursor.visible = false; //makes cursor invisible
-        // Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false; //makes cursor invisible
+        Cursor.lockState = CursorLockMode.Locked;
         curFuel = maxFuel;
         controller = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>(); // in children - let us find the animator component
@@ -123,45 +125,13 @@ public class Mech : MonoBehaviour
             {
                 Idle(); //!!MAYBE IDLE SHOULD BE THE FIRST ON IN IF STATEMENT TO GET CLEAR COMPILATION
             }
-            
             //moveDirection *= movementSpeed;
 
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                // pressCount++;
-                Jump();
-                return;
-                // if(pressCount > 0) // if they pressed at least once
-                // {
-                // elapsedTime += Time.deltaTime; // count the time passed
-
-                //     if(elapsedTime > doubleTapTime) // if the time elapsed is greater than the time limit
-                //     {
-                //     resetPressTimer();
-                //     }
-                //     else if(pressCount == 2) // otherwise if the press count is 2
-                //     {
-                //     // double pressed within the time limit
-                //     // do stuff
-                //     curFuel -= Time.deltaTime;
-                //     rigid.AddForce(rigid.transform.up * thrustForce, ForceMode.Impulse);
-                //     effect01.Play();
-                //     effect02.Play();
-                //     resetPressTimer();
-                //         if(isGrounded && curFuel < maxFuel)
-                //         {
-                //         curFuel += Time.deltaTime;
-                //         effect01.Stop();
-                //         effect02.Stop();
-                //         }
-                //         else
-                //         {
-                //         effect01.Stop();
-                //         effect02.Stop(); 
-                //         }
-                //     }
-                // }
-            }
+            // if(Input.GetKeyDown(KeyCode.Space))
+            // {
+            //     Jump();
+            //     // return;
+            // }
 
             if(Input.GetKey(KeyCode.LeftControl))
             {
@@ -212,6 +182,7 @@ public class Mech : MonoBehaviour
     {
         movementSpeed = walkSpeed;
         anim.SetFloat("Speed", 0.5f, 0.1f, Time.deltaTime);
+        
     }
 
     private void Run()
@@ -237,6 +208,7 @@ public class Mech : MonoBehaviour
     {
         anim.SetBool("Grounded", false);
         velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+        controller.Move(velocity * Time.deltaTime);
     }
     
     private void Fall()

@@ -27,6 +27,12 @@ ModelImporter:
   - first:
       74: 6480610267109901665
     second: Landing
+  - first:
+      74: 7989074992803724023
+    second: CrawlIdle
+  - first:
+      74: 8824715114392906127
+    second: RunHeavy
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -100,7 +106,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
